@@ -7,7 +7,7 @@
 using namespace std;
 int main() {
     
-    int num_particles = 100000;
+    int num_particles = 10000000;
     int a =12;
     int b = 10;
     vector<int> v(num_particles);
