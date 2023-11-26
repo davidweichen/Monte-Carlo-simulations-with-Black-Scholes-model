@@ -13,11 +13,10 @@ int main() {
     vector<int> v(num_particles);
     chrono::time_point<std::chrono::high_resolution_clock> start_time = std::chrono::high_resolution_clock::now();
     #pragma omp parallel for
-    {
         for (int i = 0; i < num_particles; i++) {
             v[i] = a + b;
         }    
-    }
+    
     chrono::time_point<std::chrono::high_resolution_clock> end_time = std::chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed = end_time - start_time;
     cout << " Elapsed time is : " << elapsed.count() << " " << std::endl;
