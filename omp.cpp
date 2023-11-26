@@ -9,16 +9,17 @@ using namespace std;
 
 double generate_spot_prices(int num_particles, int num_weeks, double strike_price ,double spot_price, double risk_free_rate, double volatility){
     // Create a vector to store the spot prices at each time step.
-    #pragma omp parallel
-    {
-    vector<vector<double>> spot_prices(num_particles, vector<double>(num_weeks + 1));
-
-    // Generate a random normal variable.
     random_device rd;
     mt19937 gen(rd());
     normal_distribution<double> dist(0.0, 1.0);
     double dt = 1.0 / num_weeks;
     double C = 0.0;
+    #pragma omp parallel
+    {
+    vector<vector<double>> spot_prices(num_particles, vector<double>(num_weeks + 1));
+
+    // Generate a random normal variable.
+
     // Simulate the spot price at each time step in parallel.
 #pragma omp for
     for (int t = 0; t < num_particles; t++) {
