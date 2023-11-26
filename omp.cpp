@@ -17,9 +17,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     vector<vector<double>> spot_prices(num_particles, vector<double>(num_weeks + 1));
     #pragma omp parallel
     {
-    
 
-    // Generate a random normal variable.
 
     // Simulate the spot price at each time step in parallel.
     #pragma omp for
@@ -34,10 +32,10 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
         }
     }
 
-        #pragma omp for reduction(+:C)
-        for (int i = 0; i < num_particles; i++) {
-            C += max(spot_prices[i][num_weeks] - strike_price, 0.0);
-        }
+    #pragma omp for reduction(+:C)
+    for (int i = 0; i < num_particles; i++) {
+        C += max(spot_prices[i][num_weeks] - strike_price, 0.0);
+    }
         // Average the discounted payoffs to get the call option price.
         
     }    
