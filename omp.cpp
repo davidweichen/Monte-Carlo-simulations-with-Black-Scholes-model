@@ -21,19 +21,19 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     // Generate a random normal variable.
 
     // Simulate the spot price at each time step in parallel.
-#pragma omp for
+    #pragma omp for
     for (int t = 0; t < num_particles; t++) {
         
         spot_prices[t][0] = spot_price;
 
         // Calculate the spot price at the current time step.
-#pragma omp critical
+        #pragma omp critical
         for (int i = 0; i < num_weeks; i++) {
             spot_prices[t][i + 1] = spot_prices[t][i] * exp((risk_free_rate - 0.5 * volatility * volatility) * dt + volatility * sqrt(dt) * dist(gen));
         }
     }
 
-  #pragma omp for
+        #pragma omp for reduction(+:C)
         for (int i = 0; i < num_particles; i++) {
             C += max(spot_prices[i][num_weeks] - strike_price, 0.0);
         }

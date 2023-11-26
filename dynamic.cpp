@@ -33,14 +33,14 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
             spot_prices[t][i + 1] = spot_prices[t][i] * exp((risk_free_rate - 0.5 * volatility * volatility) * dt + volatility * sqrt(dt) * dist(gen));
         }
     }
-    }
-  #pragma omp parallel for schedule(dynamic)
+    
+  #pragma omp for schedule(dynamic) reduction(+:C)
         for (int i = 0; i < num_particles; i++) {
             C += max(spot_prices[i][num_weeks] - strike_price, 0.0);
         }
         // Average the discounted payoffs to get the call option price.
         C /= num_particles * exp(-risk_free_rate * num_weeks * dt);
-    
+    }
     return C;
 }
 
