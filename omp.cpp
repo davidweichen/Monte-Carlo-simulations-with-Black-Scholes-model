@@ -34,7 +34,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
         }
     }
 
-        #pragma omp for reduction(+:C)
+        #pragma omp for
         for (int i = 0; i < num_particles; i++) {
             C += max(spot_prices[i][num_weeks] - strike_price, 0.0);
         }
