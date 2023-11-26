@@ -39,8 +39,9 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
             C += max(spot_prices[i][num_weeks] - strike_price, 0.0);
         }
         // Average the discounted payoffs to get the call option price.
-        C /= num_particles * exp(-risk_free_rate * num_weeks * dt);
+        
     }
+    C /= num_particles * exp(-risk_free_rate * num_weeks * dt);
     return C;
 }
 
