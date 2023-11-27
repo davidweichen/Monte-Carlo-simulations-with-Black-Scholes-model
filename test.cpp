@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <omp.h>
+#include <chrono>
 #define ARRAY_SIZE 100000000
 #define ARRAY_VALUE 1231
 
