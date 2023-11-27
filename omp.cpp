@@ -26,7 +26,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
         spot_prices[t][0] = spot_price;
 
         // Calculate the spot price at the current time step.
-        #pragma omp reduction()
+        #pragma omp critical
         for (int i = 0; i < num_weeks; i++) {
             spot_prices[t][i + 1] = spot_prices[t][i] * exp(nudt + sidt * dist(gen));
         }
