@@ -1,30 +1,17 @@
 #include <iostream>
-#include <vector>
-
-#include <cmath>
+#include <algorithm>
 #include <omp.h>
-#include <chrono>
-using namespace std;
-int main() {
+#define ARRAY_SIZE 100000000
+#define ARRAY_VALUE 1231
+int main()
+{
     
-    int num_particles = 10000000;
-    int a =12;
-    int b = 10;
-    vector<int> v(num_particles);
-    chrono::time_point<std::chrono::high_resolution_clock> start_time = std::chrono::high_resolution_clock::now();
-    #pragma omp parallel
+    int *arr = new int[ARRAY_SIZE];
+    std::fill_n(arr, ARRAY_SIZE, ARRAY_VALUE);
+    #pragma omp parallel for
+    for(int i = 0; i < ARRAY_SIZE; i++)
     {
-      int thread_id = omp_get_thread_num();
-      // Number of threads in the current team
-      int nthreads = omp_get_num_threads();
-    #pragma omp for
-        for (int i = 0; i < num_particles; i++) {
-            v[i] = 2 * a + b * b;
-        }    
+        arr[i] = arr[i] / arr[i] + arr[i] / 5 - 14;
     }
-    chrono::time_point<std::chrono::high_resolution_clock> end_time = std::chrono::high_resolution_clock::now();
-    chrono::duration<double> elapsed = end_time - start_time;
-    cout << " Elapsed time is : " << elapsed.count() << " " << std::endl;
-        
     return 0;
 }
