@@ -19,7 +19,8 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     double dt = 1.0 / num_weeks;
     double C = 0.0;
     // Simulate the spot price at each time step in parallel.
-
+    double nudt = (risk_free_rate - 0.5 * volatility * volatility) * dt;
+    double sidt = volatility * sqrt(dt);   
     for (int t = 0; t < num_particles; t++) {
         
         spot_prices[t][0] = spot_price;
@@ -27,7 +28,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
         // Calculate the spot price at the current time step.
 
         for (int i = 0; i < num_weeks; i++) {
-            spot_prices[t][i + 1] = spot_prices[t][i] * exp((risk_free_rate - 0.5 * volatility * volatility) * dt + volatility * sqrt(dt) * dist(gen));
+            spot_prices[t][i + 1] = spot_prices[t][i] * exp(nudt + sidt * dist(gen));
         }
     }
 
