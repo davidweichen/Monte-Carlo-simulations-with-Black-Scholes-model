@@ -17,11 +17,6 @@ int main() {
       int thread_id = omp_get_thread_num();
       // Number of threads in the current team
       int nthreads = omp_get_num_threads();
-
-    #pragma omp critical
-      {
-         std::cout << "Hello world, I'm thread " << thread_id << " out of " << nthreads << " total threads. " << std::endl; 
-      }
     #pragma omp for
         for (int i = 0; i < num_particles; i++) {
             v[i] = a + b;
