@@ -19,7 +19,7 @@ int main() {
       int nthreads = omp_get_num_threads();
     #pragma omp for
         for (int i = 0; i < num_particles; i++) {
-            v[i] = a + b;
+            v[i] = 2 * a + b * b;
         }    
     }
     chrono::time_point<std::chrono::high_resolution_clock> end_time = std::chrono::high_resolution_clock::now();
