@@ -3,6 +3,8 @@
 #include <omp.h>
 #define ARRAY_SIZE 100000000
 #define ARRAY_VALUE 1231
+
+using namespace std;
 int main()
 {
     
