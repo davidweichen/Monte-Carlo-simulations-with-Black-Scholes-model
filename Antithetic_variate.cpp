@@ -16,7 +16,7 @@ int Nsteps, int Nrep) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<double> dist(0, 1);
-    
+    double C1 = 0.0, C2 = 0.0;
     for (int i = 0; i < Nrep / 2; i++) {
         spot_prices1[i][0] = S0;
         spot_prices2[i][0] = S0;
@@ -25,13 +25,10 @@ int Nsteps, int Nrep) {
             spot_prices1[i][j + 1] = spot_prices1[i][j] * exp(nudt + sidt * epsilon);
             spot_prices2[i][j + 1] = spot_prices2[i][j] * exp(nudt - sidt * epsilon);
         }
+        C1 += std::max(spot_prices1[i][Nsteps] - K, 0.0);
+        C2 += std::max(spot_prices2[i][Nsteps] - K, 0.0);
     }
     
-        double C1 = 0.0, C2 = 0.0;
-        for (int i = 0; i < Nrep / 2; i++) {
-            C1 += std::max(spot_prices1[i][Nsteps] - K, 0.0);
-            C2 += std::max(spot_prices2[i][Nsteps] - K, 0.0);
-        }
         double C = (C1 + C2) / (2.0 * (Nrep / 2));
         double C0 = exp(-r * T) * C;
         return C0;
