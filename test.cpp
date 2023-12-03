@@ -20,7 +20,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     #pragma omp parallel
     {
     // Simulate the spot price at each time step in parallel.
-    #pragma omp for 
+    #pragma omp for reduction(+:C)
     for (int t = 0; t < num_particles; t++) {
         
         spot_prices[t][0] = spot_price;
