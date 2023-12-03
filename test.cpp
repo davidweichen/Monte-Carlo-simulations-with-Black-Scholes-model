@@ -27,7 +27,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
 
         // Calculate the spot price at the current time step.
         for (int i = 0; i < num_weeks; i++) {
-            spot_prices[t][0] = spot_prices[t][0] * exp(nudt + sidt * dist(gen));
+             spot_prices[t][0] *= exp(nudt + sidt * dist(gen));
         }
         C += max(spot_prices[t][0] - strike_price, 0.0);
     }       
