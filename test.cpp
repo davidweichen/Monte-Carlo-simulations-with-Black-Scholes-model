@@ -9,7 +9,7 @@ using namespace std;
 
 double generate_spot_prices(int num_particles, int num_weeks, double strike_price , double time_maturity,double spot_price, double risk_free_rate, double volatility){
     // Create a vector to store the spot prices at each time step.
-    random_device rd;
+    random_device rad;
     mt19937 gen(rd());
     normal_distribution<double> dist(0.0, 1.0);
     double dt = time_maturity/ num_weeks;
@@ -20,17 +20,18 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     #pragma omp parallel
     {
     // Simulate the spot price at each time step in parallel.
-    #pragma omp for reduction(+:C)
-    for (int t = 0; t < num_particles; t++) {
+        #pragma omp for reduction(+:C)
+            for (int t = 0; t < num_particles; t++) {
         
-        spot_prices[t][0] = spot_price;
+            spot_prices[t][0] = spot_price;
 
         // Calculate the spot price at the current time step.
-        for (int i = 0; i < num_weeks; i++) {
-             spot_prices[t][0] *= exp(nudt + sidt * dist(gen));
-        }
-        C += max(spot_prices[t][0] - strike_price, 0.0);
-    }       
+            #pragma omp critical
+                for (int i = 0; i < num_weeks; i++) {
+                    spot_prices[t][i + 1] = spot_prices[t][i] * exp(nudt + sidt * dist(gen));
+                }
+            C += max(spot_prices[t][num_weeks] - strike_price, 0.0);
+            }       
     }    
     C /= num_particles * exp(-risk_free_rate * num_weeks * dt);
     return C;
