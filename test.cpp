@@ -9,7 +9,7 @@ using namespace std;
 
 double generate_spot_prices(int num_particles, int num_weeks, double strike_price , double time_maturity,double spot_price, double risk_free_rate, double volatility){
     // Create a vector to store the spot prices at each time step.
-    random_device rad;
+    random_device rd;
     mt19937 gen(rd());
     normal_distribution<double> dist(0.0, 1.0);
     double dt = time_maturity/ num_weeks;
