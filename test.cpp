@@ -14,7 +14,6 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     // normal_distribution<double> dist(0.0, 1.0);
     // double dt = time_maturity/ num_weeks;
     double C = 0.0;
-     vector<double> spot_prices(num_weeks + 1);
     // double nudt = (risk_free_rate - 0.5 * volatility * volatility) * dt;
     // double sidt = volatility * sqrt(dt);   
     #pragma omp parallel
@@ -23,13 +22,11 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     #pragma omp for reduction(+:C)
     for (int t = 0; t < num_particles; t++) {
         
-        spot_prices[0] = spot_price;
 
         // Calculate the spot price at the current time step.
         for (int i = 0; i < num_weeks; i++) {
-            spot_prices[i + 1] = spot_prices[i] + 1;
+            C+=1;
         }
-        C += spot_prices[num_weeks];
     }       
     }    
     C /= num_particles ;
