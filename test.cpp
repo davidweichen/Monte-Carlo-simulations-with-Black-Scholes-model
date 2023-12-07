@@ -13,7 +13,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
     // mt19937 gen(rd());
     // normal_distribution<double> dist(0.0, 1.0);
     // double dt = time_maturity/ num_weeks;
-    // double C = 0.0;
+    double C = 0.0;
      vector<double> spot_prices(num_weeks + 1);
     // double nudt = (risk_free_rate - 0.5 * volatility * volatility) * dt;
     // double sidt = volatility * sqrt(dt);   
