@@ -32,7 +32,7 @@ double generate_spot_prices(int num_particles, int num_weeks, double strike_pric
         C += spot_prices[num_weeks];
     }       
     }    
-    C /= num_particles * exp(-risk_free_rate * num_weeks * dt);
+    C /= num_particles ;
     return C;
     
  } 
