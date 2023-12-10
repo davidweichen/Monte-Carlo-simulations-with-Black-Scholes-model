@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-fname = "basic.csv"
+fname = "omp.csv"
 df = pd.read_csv(fname, comment="#")
 print(df)
 
@@ -16,10 +16,11 @@ print("var names =", var_names)
 problem_sizes = df[var_names[0]].values.tolist()
 code1_time = df[var_names[1]].values.tolist()
 code2_time = df[var_names[2]].values.tolist()
-
+code3_time = df[var_names[3]].values.tolist()
+code4_time = df[var_names[4]].values.tolist()
 #code5_time = df[var_names[5]].values.tolist()
 
-plt.title("Basic vs Variance Reduction")
+plt.title("OMP Speed up")
 
 xlocs = [i for i in range(len(problem_sizes))]
 
@@ -34,17 +35,17 @@ plt.xticks(xlocs, problem_sizes)
 
 plt.plot(code1_time, "r-o")
 plt.plot(code2_time, "b-x")
-#plt.plot(code3_time, "g-^")
-#plt.plot(code4_time,"y-.")
+plt.plot(code3_time, "g-^")
+plt.plot(code4_time,"y-.")
 #plt.plot(code5_time,"k-^")
 
 #plt.xscale("log")
 #plt.yscale("log")
 
 plt.xlabel("problem_size(n)")
-plt.ylabel("elapsed time")
+plt.ylabel("Speed up")
 
-varNames = [var_names[1], var_names[2]]
+varNames = [var_names[1], var_names[2], var_names[3], var_names[4]]
 plt.legend(varNames, loc="best")
 
 plt.grid(axis='both')
