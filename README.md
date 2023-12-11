@@ -2,6 +2,6 @@
 After logged into perlmutter or your local environment
 
 # build
-mkdir build
-cd build/
+mkdir build--
+cd build/--
 g++ -fopenmp -O3 ../file.cpp -o file
